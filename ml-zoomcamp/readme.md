@@ -1,46 +1,46 @@
 Week - 1. Introduction to Machine Learning
 
-1.1 Introduction to Machine Learning
+  1.1 Introduction to Machine Learning
 
-1.2 ML vs Rule-Based Systems
+  1.2 ML vs Rule-Based Systems
 
-1.3 Supervised Machine Learning
+  1.3 Supervised Machine Learning
 
-1.4 CRISP-DM
+  1.4 CRISP-DM
 
-1.5 Model Selection Process
+  1.5 Model Selection Process
 
-1.6 Setting up the Environment
+  1.6 Setting up the Environment
 
-1.7 Introduction to NumPy
+  1.7 Introduction to NumPy
 
-1.8 Linear Algebra Refresher
+  1.8 Linear Algebra Refresher
 
-1.9 Introduction to Pandas
+  1.9 Introduction to Pandas
 
-1.10 Summary
+  1.10 Summary
 
-1.11 Homework
+  1.11 Homework
 
 Week - 2. Machine Learning for Regression
-2.1 Car price prediction project
-2.2 Data preparation
-2.3 Exploratory data analysis
-2.4 Setting up the validation framework
-2.5 Linear regression
-2.6 Linear regression: vector form
-2.7 Training linear regression: Normal equation
-2.8 Baseline model for car price prediction project
-2.9 Root mean squared error
-2.10 Using RMSE on validation data
-2.11 Feature engineering
-2.12 Categorical variables
-2.13 Regularization
-2.14 Tuning the model
-2.15 Using the model
-2.16 Car price prediction project summary
-2.17 Explore more
-2.18 Homework
+  2.1 Car price prediction project
+  2.2 Data preparation
+  2.3 Exploratory data analysis
+  2.4 Setting up the validation framework
+  2.5 Linear regression
+  2.6 Linear regression: vector form
+  2.7 Training linear regression: Normal equation
+  2.8 Baseline model for car price prediction project
+  2.9 Root mean squared error
+  2.10 Using RMSE on validation data
+  2.11 Feature engineering
+  2.12 Categorical variables
+  2.13 Regularization
+  2.14 Tuning the model
+  2.15 Using the model
+  2.16 Car price prediction project summary
+  2.17 Explore more
+  2.18 Homework
 
 Week - 3. Machine Learning for Classification
 3.1 Churn prediction project
