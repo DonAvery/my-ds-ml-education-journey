@@ -1,0 +1,132 @@
+# Question 1
+
+pip install pipenv
+pipenv --version == pipenv, version 2022.10.9
+
+# Question 2
+pipenv install scikit-learn==1.0.2
+has "sha256:038f4e9d6ef10e1f3fe82addc3a14735c299866eb10f2c77c090410904828312"
+
+# Question 3
+
+import pickle
+
+model_file = 'model1.bin'
+dv_file = 'dv.bin'
+
+with open(model_file, 'rb') as f_in:
+    model = pickle.load(f_in)
+
+with open(dv_file, 'rb') as f_in:
+    dv = pickle.load(f_in)
+
+def predict():
+    customer = {
+        "reports": 0,
+        "share": 0.001694,
+        "expenditure": 0.12,
+        "owner": "yes"
+        }
+
+    X = dv.transform([customer])
+    y_pred = model.predict_proba(X)[0, 1]
+    get_card = y_pred >= 0.5
+
+    result = {
+        'card probability': float(y_pred),
+        'get_card': bool(get_card)
+    }
+
+    return result
+
+print(predict())
+
+{'card probability': 0.16213414434326598, 'get_card': False}
+
+
+# Question 4
+
+import pickle
+from flask import Flask
+from flask import request
+from flask import jsonify
+
+model_file = 'model1.bin'
+dict_file = 'dv.bin'
+
+with open(model_file, 'rb') as f_in:
+    model = pickle.load(f_in)
+
+with open(dict_file, 'rb') as f_in:
+    dv = pickle.load(f_in)
+
+app = Flask('card')
+
+@app.route('/predict', methods=['POST'])
+
+def predict():
+    customer = request.get_json()
+
+    X = dv.transform([customer])
+    y_pred = model.predict_proba(X)[0, 1]
+    card = y_pred >= 0.5
+
+    result = {
+        'card probability': float(y_pred),
+        'card': bool(card)
+    }
+
+    return jsonify(result)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=9696)
+
+
+#!/usr/bin/env python
+# coding: utf-8
+
+import requests
+
+host = "192.168.137.147:9696"
+url = f'http://{host}/predict'
+
+customer_id = 'xyz-123'
+customer = {
+    "reports": 0, 
+    "share": 0.245, 
+    "expenditure": 3.438, 
+    "owner": "yes"
+}
+
+response = requests.post(url, json=customer).json()
+print(response)
+
+
+{'card': True, 'card probability': 0.9282218018527452}
+sending card to xyz-123
+
+
+Qustion #5 
+
+docker images svizor/zoomcamp-model:3.9.12-slim
+REPOSITORY              TAG           IMAGE ID       CREATED      SIZE
+svizor/zoomcamp-model   3.9.12-slim   571a6fdc554b   8 days ago   125MB
+
+
+Dockerfile
+
+FROM svizor/zoomcamp-model:3.9.12-slim
+
+RUN pip install pipenv
+
+WORKDIR /app
+
+COPY ["Pipfile", "Pipfile.lock", "./"]
+
+RUN pipenv install --system --deploy
+
+COPY ["predict1.py", "./"]
+
+EXPOSE 9696
+
+ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "predict:app"]
