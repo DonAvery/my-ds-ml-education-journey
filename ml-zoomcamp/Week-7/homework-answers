@@ -1,0 +1,34 @@
+Homework Week 7
+
+Q1
+
+bentoml --version
+bentoml, version 1.07
+
+Q2
+
+bentoml models list
+
+credit_risk_model:um6leestx262oxkm  bentoml.xgboost  197.77 KiB  2022-10-24 13:09:36
+
+Q3
+
+class UserProfile(BaseModel):
+	name: str
+	age: int
+	country: str
+	rating: float
+
+Q4
+
+1.1.1
+
+Q5
+
+1
+
+Q6
+
+1
+
+Q7
