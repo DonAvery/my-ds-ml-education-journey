@@ -1,0 +1,48 @@
+
+BUILD THE DOCKER IMAGE
+docker build -t clothing-model .
+
+TEST THE DOCKER FILE
+docker run -it --rm -p 8080:8080 clothing-model:latest
+
+
+
+AWS REPOSITORY CREATION
+
+aws ecr create-repository --repository-name clothing-tflite-images
+
+090321278467.dkr.ecr.us-east-1.amazonaws.com/clothing-tflite-images
+
+LOG INTO OUR REPOSITORY
+
+aws ecr get-login --no-include-email
+
+After you do the above command you will have to copy and past the result, which is a command, and run it.
+
+ACCOUNT=090321278467
+REGION=us-east-1
+REGISTRY=clothing-tflite-images
+PREFIX=${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/${REGISTRY}
+
+TAG=clothing-model-exception-v4-001
+REMOTE_URI=${PREFIX}:${TAG}
+
+TO VIEW THE ADDRESS:
+echo ${REMOTE_URI}
+
+docker tag clothing-model:latest ${REMOTE_URI}
+docker push ${REMOTE_URI}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

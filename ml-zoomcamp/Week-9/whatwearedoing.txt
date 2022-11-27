@@ -1,0 +1,238 @@
+# 9. Serverless Deep Learning
+
+We'll deploy the clothes classification model we trained previously. 
+
+## 9.1 Introduction to Serverless 
+
+* What we'll cover this week
+
+This week we will create a clothes classification service in the cloud to identify images that we upload and send.
+
+We will use AWS Lambda to serve our model. We will be able to upload an image and send the image url to lambda, which return our predicted class.
+
+We will use our previous clothes classification model, convert it to tensorflow lite and then upload the image to serve from AWS in the cloud.
+
+
+## 9.2 AWS Lambda
+
+* Intro to AWS Lambda
+* Serverless vs serverfull
+
+Lambda allows us to run code on AWS without worrying about creating services or instances, hence the "serverless" name. Inside of lambda we will create a new function and then we will choose the "Author from scratch" option. We will give our function a name and select the runtime language we want to use and the architecture and then hit "Create function".
+
+Once the function is created we will see the screen with information about our function. Since we chose Python as our runtime language the function contains "lambda-function.py" and we will modify this for our demonstration. We will have our function print the event and return "PONG" when it is triggered.
+
+Now we will click on the "Test" button and name our test event "test" and "save". Now we have to click on the "Deploy" button for our changes to take effect. When we click "Test" again we will see the repsonse.
+
+## 9.3 TensorFlow Lite
+
+* Why not TensorFlow
+* Converting the model
+* Using the TF-Lite model for making predictions
+
+Using tensorflow lite allows us to reduce our cost for storage and speeds up our initialization.
+
+Tensorflow lite only focuses on inference, or to predict in otherwords. Tensorflow lite can't be used to train a model.
+
+The first step for this process will be to load a previously trained model to deploy. This notebook shows the steps to convert a keras model to tflite.
+
+## 9.4 Preparing the Lambda code
+
+* Moving the code from notebook to script
+* Testing it locally
+
+First we will extract the code from our Jupyter notebook where we converted the model from keras to tflite and create a script from that.
+
+We will use nbconvert for this extraction.  https://stackoverflow.com/questions/37797709/convert-json-ipython-notebook-ipynb-to-py-file
+
+jupyter nbconvert --to script 'tensorflow-model.ipynb'
+
+Now we have a file named 'tensorflow-model.py'. We will clean it up by removing everything except the last section of the notebook. We will create a function to predict on a url and return the zipped dictionary. We will also rename the file 'lambda-function' as this will be the function we create on AWS lambda.
+
+## 9.5 Preparing a Docker image
+
+* Lambda base images
+* Preparing the Dockerfile
+* Using the right TF-Lite wheel
+
+First we will create a file named Dockerfile and we can use prepackaged images from AWS lambda. 
+
+We want to use the lambda/python base image and under 'Image tags' we can find the image we would like to use.  We will use an image with python 3.8. https://gallery.ecr.aws/lambda/python
+
+In our Dockerfile we will pull the python image and then we will install the dependencies we used in our Jupyter Notebook that installed the keras-image-hander and the tflite_runtime package. After that we will copy our tflite model and the lambda_function.py file to the current directory.  Last we will run a command that invokes the lambda_handler in our lambda_fucntion script.
+
+Now that our docker file is completed we will will build the docker container using the 'docker build -t clothing-model .' The '.' means we use the Dockerfile from the current directory. This will pull all the packages down into the container.
+
+We can now test our Docker container using 'docker run -it --rm -p 8080:8080 clothing-model:latest'.  This will start the Docker image and we can create a test script for our Docker image.
+
+Inside the test.py file we will import requests and then assign the function invocation to the 'url' variable, which is the url for our docker image locally.  We will assign the url of the pants image to the 'data' variable. Our results will contain the request in the json format.
+
+Now we run the test.py file and we see our results.
+
+## 9.6 Creating the lambda function
+
+* Publishing the image to AWS ECR
+* Creating the function
+* Configuring it
+* Testing the function from the AWS Console
+* Pricing
+
+Now we have built and tested our Docker image so we will now create a lambda function and deploy our Docker image. We will deploy the Docker image to AWS ECR (Elastic Container Registry). We will create our repository with the command line. If you haven't already done so you will have to run the 'pip install awscli'. We can run the 'aws ecr create-repository --repository-name clothing-tflite-images' which will create a repository on AWS. Now we will log in to that repository using the 'aws ecr get-login --no-include-email' command. This will return the password, which I will not expose here. To use the password imediately without needing an extra step we can run the command '$(aws ecr get-login --no-include-email)' which will retrieve the password and then log you in with one step.
+
+Using the url that AWS assigned to us when creating the repsitory for our Docker image we can use that information to excute a lengthy command to push our docker image to the repository.
+
+ACCOUNT=090321278467
+REGION=us-east-1
+REGISTRY=clothing-tflite-images
+PREFIX=${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/${REGISTRY}
+
+TAG=clothing-model-exception-v4-001
+REMOTE_URI=${PREFIX}:${TAG}
+
+TO VIEW THE ADDRESS:
+echo ${REMOTE_URI}
+
+docker tag clothing-model:latest ${REMOTE_URI}
+docker push ${REMOTE_URI}
+
+Now when we look at our AWS ECR respository page we will see the "clothing-tflite-images" repository.
+
+We now have our docker container loaded onto the AWS platform.  It is time to create a function on AWS that will link to the docker container. Let's choose "Container image", give it a name, in this case, "clothing-classification" and the next step is choosing our Docker image from a "Container Image URI" using the "Browse Images" button. Finally we are ready to create the function using the "Create function" button.
+
+Our "clothing-classification" function has been created and now we can test it by clicking on the "Test" tab. We previously used the url of the pants image and we will also use that here and now we can click the "Test" button. We get an error stating that the task timed out after roughly 3 seconds, which is the default time out and isn't a sufficient amount of time for our purposes so we will change that using the "Configuration" tab. Then we will click on the "Edit" button and increase time to 30 seconds and add a little more memory and click "Save". Now we go back to the "Test" tab and run our test again.
+
+We have a successful test that shows our predictions. The first time we test it takes roughly 11 seconds initialize, load and run. The second time of testing it only takes about 2 seconds. 
+
+
+
+
+
+
+## 9.7 API Gateway: exposing the lambda function
+
+* Creating and configuring the gateway
+
+Our next step will be to expose our lambda function as a web service and we will use API gateway to do this. We can search for "api gateway" to find this service. We will choose "REST API". 
+
+If this is your first time there will be an example api showing. We will select "New API", name our API and then click the "Create API". Clicking the "Actions" drop down button will allow us to choose "Create Resource". 
+
+In the "Resource Name" field enter a name. I will use "predict" here so as to use the same convention we have been using in the zoomcamp course. Then click the "Create Resource" button.
+
+We will have to add a method to our resource and we can do that by clicking on the "Actions" button and selecting "Create Method" and then choose "POST" as our method type. Now we will select "Lambda Function" and enter "clothing-classification" as the Lambda Function that we will use.
+
+We will see a Permission window and we can select "OK". Then we will see a diagram of the Method-Request-Repsonse process.
+
+We have to setup the test using the "Test" link in our diagram. In the request body we will again, enter our json url informaton for the pants image. Then we can click the "Test" button.
+
+The reults are the body of the response showing our predictions.
+
+It is time to deploy this API. Using the "Action" button again we can select "Deploy API". Using "New Stage" we will use test as our "Stage name" and then click on "Deploy".
+
+We are now presented with the url where our function resides. The url doesn't contain our endpoint, "/predict" so we will add that onto the end of the url. We will copy and paste that funciton into our test.py file and hash out our local url. When we run the test.py file we will see our predictions.
+
+Now our lambda function is exposed as a web service.
+
+
+
+
+## 9.8 Summary 
+
+* AWS Lambda is way of deploying models without having to worry about servers
+* Tensorflow Lite is a lightweight alternative to Tensorflow that only focuses on inference
+* To deploy your code, package it in a Docker container
+* Expose the lambda function via API Gateway
+
+
+## 9.9 Explore more
+
+* Try similar serverless services from Google Cloud and Microsoft Azure
+* Deploy cats vs dogs and other Keras models with AWS Lambda
+* AWS Lambda is also good for other libraries, not just Tensorflow. You can deploy Scikit-Learn and XGBoost models with it as well.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+This week we will create a clothes classification service in the cloud to identify images that we upload and send.
+
+We will use AWS Lambda to serve our model. We will be able to upload an image and send the image url to lambda, which return our predicted class.
+
+We will use our previous clothes classification model, convert it to tensorflow lite and then upload the image to serve from AWS in the cloud.
+
+
+
+
+
+
+
+
+
+
+BUILD THE DOCKER IMAGE
+docker build -t clothing-model .
+
+TEST THE DOCKER FILE
+docker run -it --rm -p 8080:8080 clothing-model:latest
+
+
+
+AWS REPOSITORY CREATION
+
+aws ecr create-repository --repository-name clothing-tflite-images
+
+090321278467.dkr.ecr.us-east-1.amazonaws.com/clothing-tflite-images
+
+LOG INTO OUR REPOSITORY
+
+aws ecr get-login --no-include-email
+
+After you do the above command you will have to copy and past the result, which is a command, and run it.
+
+ACCOUNT=090321278467
+REGION=us-east-1
+REGISTRY=clothing-tflite-images
+PREFIX=${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/${REGISTRY}
+
+TAG=clothing-model-exception-v4-001
+REMOTE_URI=${PREFIX}:${TAG}
+
+TO VIEW THE ADDRESS:
+echo ${REMOTE_URI}
+
+docker tag clothing-model:latest ${REMOTE_URI}
+docker push ${REMOTE_URI}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
