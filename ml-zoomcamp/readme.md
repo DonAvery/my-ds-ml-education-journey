@@ -52,105 +52,115 @@ Week - 3. Machine Learning for Classification
     3.15 Homework
 
 Week - 4. Evaluation Metrics for Classification
-4.1 Evaluation metrics: session overview
-4.2 Accuracy and dummy model
-4.3 Confusion table
-4.4 Precision and Recall
-4.5 ROC Curves
-4.6 ROC AUC
-4.7 Cross-Validation
-4.8 Summary
-4.9 Explore more
-4.10 Homework
+
+    4.1 Evaluation metrics: session overview
+    4.2 Accuracy and dummy model
+    4.3 Confusion table
+    4.4 Precision and Recall
+    4.5 ROC Curves
+    4.6 ROC AUC
+    4.7 Cross-Validation
+    4.8 Summary
+    4.9 Explore more
+    4.10 Homework
 
 Week - 5. Deploying Machine Learning Models
-5.1 Intro / Session overview
-5.2 Saving and loading the model
-5.3 Web services: introduction to Flask
-5.4 Serving the churn model with Flask
-5.5 Python virtual environment: Pipenv
-5.6 Environment management: Docker
-5.7 Deployment to the cloud: AWS Elastic Beanstalk (optional)
-5.8 Summary
-5.9 Explore more
-5.10 Homework
-5b. Bento ML
-More information coming soon!
+
+    5.1 Intro / Session overview
+    5.2 Saving and loading the model
+    5.3 Web services: introduction to Flask
+    5.4 Serving the churn model with Flask
+    5.5 Python virtual environment: Pipenv
+    5.6 Environment management: Docker
+    5.7 Deployment to the cloud: AWS Elastic Beanstalk (optional)
+    5.8 Summary
+    5.9 Explore more
+    5.10 Homework
+    5b. Bento ML
+    More information coming soon!
 
 Week - 6. Decision Trees and Ensemble Learning
-6.1 Credit risk scoring project
-6.2 Data cleaning and preparation
-6.3 Decision trees
-6.4 Decision tree learning algorithm
-6.5 Decision trees parameter tuning
-6.6 Ensemble learning and random forest
-6.7 Gradient boosting and XGBoost
-6.8 XGBoost parameter tuning
-6.9 Selecting the best model
-6.10 Summary
-6.11 Explore more
-6.12 Homework
+
+    6.1 Credit risk scoring project
+    6.2 Data cleaning and preparation
+    6.3 Decision trees
+    6.4 Decision tree learning algorithm
+    6.5 Decision trees parameter tuning
+    6.6 Ensemble learning and random forest
+    6.7 Gradient boosting and XGBoost
+    6.8 XGBoost parameter tuning
+    6.9 Selecting the best model
+    6.10 Summary
+    6.11 Explore more
+    6.12 Homework
 
 Week - 7. Midterm Project
-Putting everything we've learned so far in practice!
+
+    Putting everything we've learned so far in practice!
 
 Week - 8. Neural Networks and Deep Learning
-8.1 Fashion classification
-8.2 TensorFlow and Keras
-8.3 Pre-trained convolutional neural networks
-8.4 Convolutional neural networks
-8.5 Transfer learning
-8.6 Adjusting the learning rate
-8.7 Checkpointing
-8.8 Adding more layers
-8.9 Regularization and dropout
-8.10 Data augmentation
-8.11 Training a larger model
-8.12 Using the model
-8.13 Summary
-8.14 Explore more
-8.15 Homework
+
+    8.1 Fashion classification
+    8.2 TensorFlow and Keras
+    8.3 Pre-trained convolutional neural networks
+    8.4 Convolutional neural networks
+    8.5 Transfer learning
+    8.6 Adjusting the learning rate
+    8.7 Checkpointing
+    8.8 Adding more layers
+    8.9 Regularization and dropout
+    8.10 Data augmentation
+    8.11 Training a larger model
+    8.12 Using the model
+    8.13 Summary
+    8.14 Explore more
+    8.15 Homework
 
 Week - 9. Serverless Deep Learning
-9.1 Introduction to Serverless
-9.2 AWS Lambda
-9.3 TensorFlow Lite
-9.4 Preparing the code for Lambda
-9.5 Preparing a Docker image
-9.6 Creating the lambda function
-9.7 API Gateway: exposing the lambda function
-9.8 Summary
-9.9 Explore more
-9.10 Homework
+
+    9.1 Introduction to Serverless
+    9.2 AWS Lambda
+    9.3 TensorFlow Lite
+    9.4 Preparing the code for Lambda
+    9.5 Preparing a Docker image
+    9.6 Creating the lambda function
+    9.7 API Gateway: exposing the lambda function
+    9.8 Summary
+    9.9 Explore more
+    9.10 Homework
 
 Week - 10. Kubernetes and TensorFlow Serving
-10.1 Overview
-10.2 TensorFlow Serving
-10.3 Creating a pre-processing service
-10.4 Running everything locally with Docker-compose
-10.5 Introduction to Kubernetes
-10.6 Deploying a simple service to Kubernetes
-10.7 Deploying TensorFlow models to Kubernetes
-10.8 Deploying to EKS
-10.9 Summary
-10.10 Explore more
-10.11 Homework
+
+    10.1 Overview
+    10.2 TensorFlow Serving
+    10.3 Creating a pre-processing service
+    10.4 Running everything locally with Docker-compose
+    10.5 Introduction to Kubernetes
+    10.6 Deploying a simple service to Kubernetes
+    10.7 Deploying TensorFlow models to Kubernetes
+    10.8 Deploying to EKS
+    10.9 Summary
+    10.10 Explore more
+    10.11 Homework
 
 Week - 11. KServe
-11.1 Overview
-11.2 Running KServe locally
-11.3 Deploying a Scikit-Learn model with KServe
-11.4 Deploying custom Scikit-Learn images with KServe
-11.5 Serving TensorFlow models with KServe
-11.6 KServe transformers
-11.7 Deploying with KServe and EKS
-11.8 Summary
-11.9 Explore more
+
+    11.1 Overview
+    11.2 Running KServe locally
+    11.3 Deploying a Scikit-Learn model with KServe
+    11.4 Deploying custom Scikit-Learn images with KServe
+    11.5 Serving TensorFlow models with KServe
+    11.6 KServe transformers
+    11.7 Deploying with KServe
+    11.8 Summary
+    11.9 Explore more
 
 Week - 12. Capstone Project
-Putting everything we've learned so far in practice one more time!
+
+    Putting everything we've learned so far in practice one more time!
 
 13. Article
-Writing an article about something not covered in the course.
+
+    Writing an article about something not covered in the course.
 
 14. Third project (optional)
