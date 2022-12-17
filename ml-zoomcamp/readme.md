@@ -1,5 +1,5 @@
-Week - 1. Introduction to Machine Learning 
-  1.1 Introduction to Machine Learning 
+Week - 1. Introduction to Machine Learning  
+  1.1 Introduction to Machine Learning  
   1.2 ML vs Rule-Based Systems  
   1.3 Supervised Machine Learning  
   1.4 CRISP-DM  
