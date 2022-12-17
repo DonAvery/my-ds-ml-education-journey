@@ -1,4 +1,5 @@
 Week - 1. Introduction to Machine Learning  
+
     1.1 Introduction to Machine Learning  
     1.2 ML vs Rule-Based Systems  
     1.3 Supervised Machine Learning  
@@ -12,6 +13,7 @@ Week - 1. Introduction to Machine Learning
     1.11 Homework
 
 Week - 2. Machine Learning for Regression  
+
   2.1 Car price prediction project  
   2.2 Data preparation  
   2.3 Exploratory data analysis  
