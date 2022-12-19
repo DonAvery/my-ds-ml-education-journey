@@ -18,9 +18,13 @@ Several models were used in this Jupyter Notebook:
 ## To run the project
 
 Create a virtual environment on your machine and activate
+
 Clone this repository
+
 Use the requirements.txt to install dependencies
+
 Run the customer-marketing notebook for the EDA, model training and parameter tuning.
+
 When ready for deployment run the Best Model & BentoML Save notebook.
 
 After running the BentoML notebook you can start setting up the deployment.
