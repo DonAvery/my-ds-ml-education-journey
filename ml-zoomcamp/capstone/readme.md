@@ -20,4 +20,16 @@ Several models were used in this Jupyter Notebook:
 Create a virtual environment on your machine and activate
 Clone this repository
 Use the requirements.txt to install dependencies
-Run the Best Model & BentoML Save notebook for the EDA, model training and parameter tuning.
+Run the customer-marketing notebook for the EDA, model training and parameter tuning.
+When ready for deployment run the Best Model & BentoML Save notebook.
+
+After running the BentoML notebook you can start setting up the deployment.
+
+Run bentoml build inside the folder with the files from the files directory.
+
+Run bentoml containerize <tag> the tag will be given to you after the build.
+
+Run docker run -it --rm -p 3000:3000 <tag> serve --production, this line will be given after docker run, copy and paste it.
+
+Copy the json from the locustfile.py and use http://0.0.0.0:8089 to post that json file into the get portion of the page and see the results.
+
